@@ -2,12 +2,18 @@ import React, { Component } from 'react';
 import AuthForm from './auth-form';
 import { CURRENT_USER } from 'client/queries/user';
 import { graphql } from 'react-apollo';
+import { hashHistory } from 'react-router';
 import { LOGIN } from 'client/mutations/user';
 
 class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = { errors: [] }
+  }
+
+  componentWillUpdate(nextProps) {
+    if (!this.props.data.user && nextProps.data.user)
+      hashHistory.push('/dashboard');
   }
 
   onSubmit({ email, password }) {
@@ -35,4 +41,6 @@ class LoginForm extends Component {
 };
 
 
-export default graphql(LOGIN)(LoginForm);
+export default graphql(CURRENT_USER)(
+  graphql(LOGIN)(LoginForm)
+);

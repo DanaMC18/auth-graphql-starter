@@ -7,6 +7,7 @@ import { hashHistory, IndexRoute, Router, Route } from 'react-router';
 import App from 'client/components/app';
 import Dashboard from 'client/components/dashboard';
 import LoginForm from 'client/components/login-form';
+import requireAuth from 'client/components/require-auth'; // HOC
 import SignupForm from 'client/components/signup-form';
 
 const networkInterface = createNetworkInterface({
@@ -24,7 +25,7 @@ const Root = () => {
     <ApolloProvider client={ client }>
       <Router history={ hashHistory }>
         <Route path='/' component={ App }>
-          <Route path='/dashboard' component={ Dashboard } />
+          <Route path='/dashboard' component={ requireAuth(Dashboard) } />
           <Route path='/login' component={ LoginForm } />
           <Route path='/signup' component={ SignupForm } />
         </Route>
