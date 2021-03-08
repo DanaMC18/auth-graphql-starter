@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import AuthForm from './auth-form';
 import { CURRENT_USER } from 'client/queries/user';
 import { graphql } from 'react-apollo';
-import { LOGIN } from 'client/mutations/user';
+import { SIGNUP } from 'client/mutations/user';
 
-class LoginForm extends Component {
+class SignupForm extends Component {
   constructor(props) {
-    super(props);
-    this.state = { errors: [] }
+    super(props)
+    this.state = { errors: [] };
   }
 
   onSubmit({ email, password }) {
@@ -18,21 +18,20 @@ class LoginForm extends Component {
     .catch(res => {
       const errors = res.graphQLErrors.map(err => err.message);
       this.setState({ errors });
-    });
-  };
+    })
+  }
 
   render() {
-    return (
+    return(
       <div className='container'>
-        <h3>Login</h3>
+        <h3>Signup</h3>
         <AuthForm
           errors={ this.state.errors }
           onSubmit={ this.onSubmit.bind(this) }
         />
       </div>
-    );
+    )
   }
-};
+}
 
-
-export default graphql(LOGIN)(LoginForm);
+export default graphql(SIGNUP)(SignupForm);
